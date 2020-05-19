@@ -47,7 +47,8 @@ export class QuickFileOpenFrontendContribution implements CommandContribution, K
     registerKeybindings(keybindings: KeybindingRegistry): void {
         keybindings.registerKeybinding({
             command: quickFileOpen.id,
-            keybinding: 'ctrlcmd+p'
+            keybinding: 'ctrlcmd+p',
+            when: 'workspaceState != empty'
         });
     }
 
