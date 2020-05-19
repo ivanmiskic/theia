@@ -51,6 +51,10 @@
       "backend": "lib/plugin-ext-backend-module",
       "backendElectron": "lib/plugin-ext-backend-electron-module",
       "frontend": "lib/plugin-ext-frontend-module"
+    },
+    {
+      "frontend": "lib/main/browser/webview/webview-frontend-module",
+      "frontendElectron": "lib/main/electron-browser/webview/electron-webview-frontend-module"
     }
   ],
   "keywords": [

@@ -62,7 +62,7 @@ import { LanguagesMainFactory, OutputChannelRegistryFactory } from '../../common
 import { LanguagesMainImpl } from './languages-main';
 import { OutputChannelRegistryMainImpl } from './output-channel-registry-main';
 import { InPluginFileSystemWatcherManager } from './in-plugin-filesystem-watcher-manager';
-import { WebviewWidget, WebviewWidgetIdentifier, WebviewWidgetExternalEndpoint } from './webview/webview';
+import { WebviewWidget } from './webview/webview';
 import { WebviewEnvironment } from './webview/webview-environment';
 import { WebviewThemeDataProvider } from './webview/webview-theme-data-provider';
 import { bindWebviewPreferences } from './webview/webview-preferences';
@@ -162,21 +162,6 @@ export default new ContainerModule((bind, unbind, isBound, rebind) => {
     ).inSingletonScope();
     bind(WebviewResourceCache).toSelf().inSingletonScope();
     bind(WebviewWidget).toSelf();
-    bind(WidgetFactory).toDynamicValue(({ container }) => ({
-        id: WebviewWidget.FACTORY_ID,
-        createWidget: async (identifier: WebviewWidgetIdentifier) => {
-            const externalEndpoint = await container.get(WebviewEnvironment).externalEndpoint();
-            let endpoint = externalEndpoint.replace('{{uuid}}', identifier.id);
-            if (endpoint[endpoint.length - 1] === '/') {
-                endpoint = endpoint.slice(0, endpoint.length - 1);
-            }
-
-            const child = container.createChild();
-            child.bind(WebviewWidgetIdentifier).toConstantValue(identifier);
-            child.bind(WebviewWidgetExternalEndpoint).toConstantValue(endpoint);
-            return child.get(WebviewWidget);
-        }
-    })).inSingletonScope();
 
     bind(PluginViewWidget).toSelf();
     bind(WidgetFactory).toDynamicValue(({ container }) => ({
